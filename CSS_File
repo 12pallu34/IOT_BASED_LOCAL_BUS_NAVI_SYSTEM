@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Bus Tracking Dashboard</title>
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+	<script src="/js/auth.js"></script>
+</head>
+<body>
+	<nav class="navbar">
+		<div class="nav-container">
+			<div class="nav-left">
+				<button class="back-button" onclick="goBack()" title="Go Back">
+					<span>←</span> Back
+				</button>
+				<div class="nav-brand">🚌 Bus Tracking System</div>
+			</div>
+			<ul class="nav-menu">
+				<li><a href="/dashboard" class="active">Dashboard</a></li>
+				<li><a href="/tracking">Live Tracking</a></li>
+				<li><a href="/admin">Admin Panel</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="container">
+		<header class="page-header">
+			<h1>Dashboard</h1>
+			<div class="status-indicator">
+				<span class="status-dot" id="connectionStatus"></span>
+				<span id="connectionText">Connecting...</span>
+			</div>
+		</header>
+
+		<div class="stats-grid">
+			<div class="stat-card">
+				<div class="stat-icon">🚍</div>
+				<div class="stat-content">
+					<div class="stat-label">Active Buses</div>
+					<div class="stat-value" id="activeBuses">0</div>
+				</div>
+			</div>
+			<div class="stat-card">
+				<div class="stat-icon">👥</div>
+				<div class="stat-content">
+					<div class="stat-label">Total Passengers</div>
+					<div class="stat-value" id="totalPassengers">0</div>
+				</div>
+			</div>
+			<div class="stat-card">
+				<div class="stat-icon">🗺️</div>
+				<div class="stat-content">
+					<div class="stat-label">Routes</div>
+					<div class="stat-value" id="totalRoutes">0</div>
+				</div>
+			</div>
+			<div class="stat-card">
+				<div class="stat-icon">📍</div>
+				<div class="stat-content">
+					<div class="stat-label">GPS Updates</div>
+					<div class="stat-value" id="gpsUpdates">0</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="content-grid">
+			<div class="card">
+				<div class="card-header">
+					<h2>Bus Status</h2>
+					<button class="btn-secondary" onclick="refreshBuses()">🔄 Refresh</button>
+				</div>
+				<div class="card-body">
+					<table class="data-table">
+						<thead>
+							<tr>
+								<th>Bus Number</th>
+								<th>Route</th>
+								<th>Passengers</th>
+								<th>Capacity</th>
+								<th>Status</th>
+								<th>Last Update</th>
+							</tr>
+						</thead>
+						<tbody id="busTableBody">
+							<tr>
+								<td colspan="6" class="text-center">Loading...</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card-header">
+					<h2>Recent Activity</h2>
+				</div>
+				<div class="card-body">
+					<div id="activityFeed" class="activity-feed">
+						<div class="activity-item">
+							<span class="activity-time">Loading...</span>
+							<span class="activity-text">Connecting to server...</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="card-header">
+				<h2>Quick Map View</h2>
+			</div>
+			<div class="card-body">
+				<div id="miniMap" style="height: 400px;"></div>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+	<script src="/js/dashboard.js"></script>
+</body>
+</html>
