@@ -2,6 +2,6 @@
 This is the iot based project
 
 #Table of Contents
--Admin_file
--CSS_file
--Index_file
+Admin_file
+CSS_file
+index_file
