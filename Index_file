@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Login - Bus Tracking System</title>
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/login.css">
+</head>
+<body class="login-body">
+	<div class="login-container">
+		<div class="login-card">
+			<div class="login-header">
+				<div class="logo">🚌</div>
+				<h1>Bus Tracking System</h1>
+				<p>Sign in to access your dashboard</p>
+			</div>
+
+			<form id="loginForm" class="login-form">
+				<div class="form-group">
+					<label for="username">
+						<span class="label-icon">👤</span>
+						Username or Email
+					</label>
+					<input 
+						type="text" 
+						id="username" 
+						name="username" 
+						required 
+						autocomplete="username"
+						placeholder="Enter your username"
+					>
+				</div>
+
+				<div class="form-group">
+					<label for="password">
+						<span class="label-icon">🔒</span>
+						Password
+					</label>
+					<div class="password-input-wrapper">
+						<input 
+							type="password" 
+							id="password" 
+							name="password" 
+							required 
+							autocomplete="current-password"
+							placeholder="Enter your password"
+						>
+						<button type="button" class="toggle-password" onclick="togglePassword()">
+							<span id="eyeIcon">👁️</span>
+						</button>
+					</div>
+				</div>
+
+				<div class="form-options">
+					<label class="remember-me">
+						<input type="checkbox" id="rememberMe" name="rememberMe">
+						<span>Remember me</span>
+					</label>
+					<a href="#" class="forgot-password" onclick="showForgotPassword(event)">Forgot password?</a>
+				</div>
+
+				<button type="submit" class="btn-login">
+					<span id="loginText">Sign In</span>
+					<span id="loginSpinner" class="spinner" style="display: none;">⏳</span>
+				</button>
+
+				<div id="errorMessage" class="error-message" style="display: none;"></div>
+			</form>
+
+			<div class="login-footer">
+				<p>Demo Credentials:</p>
+				<div class="demo-credentials">
+					<div class="demo-account">
+						<strong>Admin:</strong> admin / admin123
+					</div>
+					<div class="demo-account">
+						<strong>User:</strong> user / user123
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="features-section">
+			<h3>🚀 Features</h3>
+			<ul class="features-list">
+				<li>
+					<span class="feature-icon">📍</span>
+					<div>
+						<strong>Real-time GPS Tracking</strong>
+						<p>Track buses live on interactive maps</p>
+					</div>
+				</li>
+				<li>
+					<span class="feature-icon">👥</span>
+					<div>
+						<strong>Passenger Counting</strong>
+						<p>RFID-based entry/exit tracking</p>
+					</div>
+				</li>
+				<li>
+					<span class="feature-icon">📊</span>
+					<div>
+						<strong>Analytics Dashboard</strong>
+						<p>View statistics and trip history</p>
+					</div>
+				</li>
+				<li>
+					<span class="feature-icon">⚡</span>
+					<div>
+						<strong>Live Updates</strong>
+						<p>WebSocket-powered real-time data</p>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<!-- Forgot Password Modal -->
+	<div id="forgotPasswordModal" class="modal" style="display: none;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h2>Reset Password</h2>
+				<button class="close-btn" onclick="closeForgotPassword()">×</button>
+			</div>
+			<div class="modal-body">
+				<form id="forgotPasswordForm">
+					<div class="form-group">
+						<label for="resetEmail">Email Address</label>
+						<input 
+							type="email" 
+							id="resetEmail" 
+							required 
+							placeholder="Enter your email"
+						>
+					</div>
+					<div class="modal-actions">
+						<button type="button" class="btn-secondary" onclick="closeForgotPassword()">Cancel</button>
+						<button type="submit" class="btn-primary">Send Reset Link</button>
+					</div>
+				</form>
+				<div id="resetMessage" class="success-message" style="display: none; margin-top: 1rem;"></div>
+			</div>
+		</div>
+	</div>
+
+	<script src="/js/login.js"></script>
+</body>
+</html>
