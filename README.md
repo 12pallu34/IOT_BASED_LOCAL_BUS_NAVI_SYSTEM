@@ -14,8 +14,7 @@ IoT-based real-time local bus tracking and navigation system using GPS, web inte
 - [Technologies](#technologies)
 - [Contributing](#contributing)
 - [License](#license)
-
-
+  
 ## Features
 
 - Real-time GPS bus location tracking
