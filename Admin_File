@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Admin Panel - Bus Management</title>
+	<link rel="stylesheet" href="/css/style.css">
+	<script src="/js/auth.js"></script>
+</head>
+<body>
+	<nav class="navbar">
+		<div class="nav-container">
+			<div class="nav-left">
+				<button class="back-button" onclick="goBack()" title="Go Back">
+					<span>←</span> Back
+				</button>
+				<div class="nav-brand">🚌 Bus Tracking System</div>
+			</div>
+			<ul class="nav-menu">
+				<li><a href="/dashboard">Dashboard</a></li>
+				<li><a href="/tracking">Live Tracking</a></li>
+				<li><a href="/admin" class="active">Admin Panel</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="container">
+		<header class="page-header">
+			<h1>Admin Panel</h1>
+			<button class="btn-primary" onclick="showAddBusModal()">+ Add New Bus</button>
+		</header>
+
+		<div class="tabs">
+			<button class="tab-btn active" onclick="switchTab('buses')">Bus Management</button>
+			<button class="tab-btn" onclick="switchTab('analytics')">Analytics</button>
+			<button class="tab-btn" onclick="switchTab('settings')">Settings</button>
+		</div>
+
+		<div id="busesTab" class="tab-content active">
+			<div class="card">
+				<div class="card-header">
+					<h2>Bus Controls</h2>
+				</div>
+				<div class="card-body">
+					<div style="display: flex; gap: 1rem; align-items: center;">
+						<button id="activateBusBtn" class="btn-primary">Activate Bus</button>
+						<button id="deactivateBusBtn" class="btn-secondary">Deactivate Bus</button>
+						<button id="resetPassengerBtn" class="btn-danger">Reset Passenger Count</button>
+						<span id="busStatusText" style="margin-left: 1rem; font-weight: bold;"></span>
+						<span id="passengerCountText" style="margin-left: 1rem;"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="analyticsTab" class="tab-content">
+			<div class="stats-grid">
+				<div class="stat-card">
+					<div class="stat-icon">📊</div>
+					<div class="stat-content">
+						<div class="stat-label">Total Trips Today</div>
+						<div class="stat-value" id="totalTrips">0</div>
+					</div>
+				</div>
+				<div class="stat-card">
+					<div class="stat-icon">👥</div>
+					<div class="stat-content">
+						<div class="stat-label">Passengers Today</div>
+						<div class="stat-value" id="passengersToday">0</div>
+					</div>
+				</div>
+				<div class="stat-card">
+					<div class="stat-icon">⏱️</div>
+					<div class="stat-content">
+						<div class="stat-label">Average Trip Time</div>
+						<div class="stat-value" id="avgTripTime">0 min</div>
+					</div>
+				</div>
+				<div class="stat-card">
+					<div class="stat-icon">🎯</div>
+					<div class="stat-content">
+						<div class="stat-label">Utilization Rate</div>
+						<div class="stat-value" id="utilizationRate">0%</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card-header">
+					<h2>Passenger Count History</h2>
+				</div>
+				<div class="card-body">
+					<div id="passengerChart" style="height: 300px; display: flex; align-items: center; justify-content: center; color: #666;">
+						Analytics visualization coming soon...
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="settingsTab" class="tab-content">
+			<div class="card">
+				<div class="card-header">
+					<h2>System Settings</h2>
+				</div>
+				<div class="card-body">
+					<form id="settingsForm" class="settings-form">
+						<div class="form-group">
+							<label for="updateInterval">GPS Update Interval (seconds)</label>
+							<input type="number" id="updateInterval" value="30" min="5" max="300">
+						</div>
+						<div class="form-group">
+							<label for="dataRetention">Data Retention (days)</label>
+							<input type="number" id="dataRetention" value="30" min="1" max="365">
+						</div>
+						<div class="form-group">
+							<label>
+								<input type="checkbox" id="enableNotifications" checked>
+								Enable Real-time Notifications
+							</label>
+						</div>
+						<div class="form-group">
+							<label>
+								<input type="checkbox" id="enableAutoRefresh" checked>
+								Enable Auto-refresh
+							</label>
+						</div>
+						<button type="submit" class="btn-primary">Save Settings</button>
+					</form>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card-header">
+					<h2>Database Maintenance</h2>
+				</div>
+				<div class="card-body">
+					<div class="maintenance-actions">
+						<button class="btn-secondary" onclick="cleanupOldData()">🗑️ Cleanup Old Data</button>
+						<button class="btn-secondary" onclick="exportData()">📥 Export Data</button>
+						<button class="btn-danger" onclick="resetDatabase()">⚠️ Reset Database</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Add Bus Modal -->
+	<div id="addBusModal" class="modal">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h2>Add New Bus</h2>
+				<button class="close-btn" onclick="closeAddBusModal()">×</button>
+			</div>
+			<div class="modal-body">
+				<form id="addBusForm" class="modal-form">
+					<div class="form-group">
+						<label for="busNumber">Bus Number *</label>
+						<input type="text" id="busNumber" required placeholder="e.g., BUS-004">
+					</div>
+					<div class="form-group">
+						<label for="deviceId">Device ID *</label>
+						<input type="text" id="deviceId" required placeholder="e.g., DEVICE-004">
+					</div>
+					<div class="form-group">
+						<label for="routeName">Route Name *</label>
+						<input type="text" id="routeName" required placeholder="e.g., Route D - Mall">
+					</div>
+					<div class="form-group">
+						<label for="capacity">Capacity *</label>
+						<input type="number" id="capacity" required value="50" min="1">
+					</div>
+					<div class="modal-actions">
+						<button type="button" class="btn-secondary" onclick="closeAddBusModal()">Cancel</button>
+						<button type="submit" class="btn-primary">Add Bus</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<script src="/js/admin.js"></script>
+</body>
+</html>
